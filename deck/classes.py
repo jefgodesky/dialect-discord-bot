@@ -27,6 +27,9 @@ class Deck:
         self.cards = [Card(deck_type, x + 1) for x in range(sizes[deck_type])]
         self.labels = labels
 
+    def get_label(self, index: int):
+        return self.labels.get(self.deck_type, index)
+
     def shuffle(self) -> None:
         random.shuffle(self.cards)
 

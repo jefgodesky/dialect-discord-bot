@@ -82,6 +82,10 @@ class TestDeck:
         for card in deck.cards:
             assert card.deck_type == "legacy"
 
+    def test_labels(self):
+        deck = Deck("voice")
+        assert deck.get_label(1) == "Explorer"
+
     def test_shuffle(self):
         deck = Deck("legacy")
         with patch("random.shuffle") as mock_shuffle:

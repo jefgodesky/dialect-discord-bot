@@ -30,3 +30,7 @@ class TestCard:
         card = Card("legacy", 1)
         assert card.deck_type == "legacy"
         assert card.index == 1
+
+    def test_get_filename(self):
+        card = Card("legacy", 1)
+        assert card.filename == "legacy01.png"

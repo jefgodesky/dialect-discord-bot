@@ -26,11 +26,10 @@ class Game:
     def phase(self):
         return self.phases[self.curr_phase]
 
-    def play(self, member: Member, card: Card):
-        for i, (player, hand, played_card) in enumerate(self.players):
-            if player == member:
-                self.players[i] = (player, hand, card)
-                break
+    def play(self, member: Member, card: Card) -> None:
+        index = self.get_player_index(member)
+        if index is not None:
+            self.players[index] = (self.players[index][0], self.players[index][1], card)
 
         if all(player[2] is not None for player in self.players):
             self.advance_phase()

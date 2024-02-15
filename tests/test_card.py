@@ -16,6 +16,10 @@ class TestCard:
         Card(card_list=card_list)
         assert open_mock.call_count == 1
 
+    def test_repr(self):
+        card = Card("voice", 1)
+        assert str(card) == "Explorer"
+
     def test_create_voice_card(self):
         card = Card("voice", 1)
         assert card.deck_type == "voice"

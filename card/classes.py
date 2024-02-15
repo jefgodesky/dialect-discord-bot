@@ -12,6 +12,9 @@ class Card:
         self.index = index
         self.card_list = card_list
 
+    def __repr__(self):
+        return self.label
+
     @property
     def filename(self):
         return self.deck_type + str(self.index).zfill(2) + ".png"

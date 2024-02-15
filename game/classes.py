@@ -20,11 +20,16 @@ class Game:
         hands = [Hand(card_list=self.card_list) for _ in players]
         played: List[Optional[Card]] = [None for _ in players]
         self.players = list(zip(players, hands, played))
-        self.decks["voice"].deal(3, [player[1] for player in self.players])
+        self.deal("voice")
 
     @property
     def phase(self):
         return self.phases[self.curr_phase]
+
+    def deal(self, deck_type: DeckType):
+        for index, _ in enumerate(self.players):
+            self.players[index] = (self.players[index][0], Hand(), None)
+        self.decks[deck_type].deal(3, [player[1] for player in self.players])
 
     def play(self, member: Member, card: Card) -> None:
         index = self.get_player_index(member)
@@ -44,7 +49,7 @@ class Game:
         index = self.get_player_index(member)
         return None if index is None else self.players[index]
 
-    def next_phase(self):
+    def next_phase(self) -> int:
         return min(self.curr_phase + 1, len(self.phases) - 1)
 
     def advance_phase(self):

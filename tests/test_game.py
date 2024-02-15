@@ -109,3 +109,9 @@ class TestGame:
 
     def test_get_player(self, play_game):
         assert play_game.get_player(play_game.players[0][0]) == play_game.players[0]
+
+    def test_deal(self, play_game):
+        play_game.deal("age1")
+        for player in play_game.players:
+            assert len(player[1].cards) == 3
+            assert all(card.deck_type == "age1" for card in player[1].cards)

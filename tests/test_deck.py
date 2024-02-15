@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 from card.classes import Card
 from hand.classes import Hand
-from deck.classes import Deck
+from deck.classes import Deck, DeckLabels
 
 
 class TestDeck:
@@ -105,3 +105,13 @@ class TestDeck:
         assert len(h1.cards) == 3
         assert len(h2.cards) == 3
         assert len(h3.cards) == 3
+
+
+class TestDeckLabels:
+    def test_creates_deck_labels(self):
+        labels = DeckLabels()
+        assert isinstance(labels, DeckLabels)
+
+    def test_loads_labels(self):
+        labels = DeckLabels()
+        assert labels.get("voice", 1) == "Explorer"

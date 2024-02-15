@@ -1,5 +1,6 @@
 from typing import List
 import random
+import yaml
 
 from card.classes import Card, DeckType
 from hand.classes import Hand
@@ -21,3 +22,15 @@ class Deck:
         for x in range(num):
             for player in players:
                 player.draw(self.draw())
+
+
+class DeckLabels:
+    def __init__(self):
+        with open("cardlist.yaml") as file:
+            try:
+                self.data = yaml.safe_load(file)
+            except yaml.YAMLError as err:
+                print(err)
+
+    def get(self, deck_type: DeckType, index: int) -> str:
+        return self.data[deck_type][index - 1]

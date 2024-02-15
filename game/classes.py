@@ -53,4 +53,7 @@ class Game:
         return min(self.curr_phase + 1, len(self.phases) - 1)
 
     def advance_phase(self):
+        new_deal = ["voice", "age1"]
         self.curr_phase = self.next_phase()
+        if self.phase in new_deal:
+            self.deal(self.phase)

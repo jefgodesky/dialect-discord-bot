@@ -104,6 +104,12 @@ class TestGame:
             play_game.play(player[0], Card())
         assert play_game.phase == "age1"
 
+    def test_advancing_to_age1_deals_cards(self, play_game):
+        play_game.advance_phase()
+        for player in play_game.players:
+            assert len(player[1].cards) == 3
+            assert all(card.deck_type == "age1" for card in player[1].cards)
+
     def test_get_player_index(self, play_game):
         assert play_game.get_player_index(play_game.players[0][0]) == 0
 

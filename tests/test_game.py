@@ -94,7 +94,7 @@ class TestGame:
         return game
 
     def test_play(self, play_game):
-        card = Card("voice", 1)
+        card = play_game.players[0][1].cards[0]
         play_game.play(play_game.players[0][0], card)
         assert play_game.players[0][2] == card
         assert play_game.players[1][2] is None

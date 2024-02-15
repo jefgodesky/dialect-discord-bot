@@ -13,9 +13,16 @@ class Game:
         hands = [Hand(card_list=self.card_list) for _ in players]
         played: List[Optional[Card]] = [None for _ in players]
         self.players = list(zip(players, hands, played))
-        self.phase = "voice"
+        self.phases: List[DeckType] = ["voice", "age1", "age2", "age3", "legacy"]
+        self.curr_phase = 0
 
-        decks: List[DeckType] = ["voice", "age1", "age2", "age3", "legacy"]
         self.decks = {}
-        for deck in decks:
+        for deck in self.phases:
             self.decks[deck] = Deck(deck)
+
+    @property
+    def phase(self):
+        return self.phases[self.curr_phase]
+
+    def advance_phase(self):
+        self.curr_phase = min(self.curr_phase + 1, len(self.phases) - 1)

@@ -18,6 +18,10 @@ class TestGame:
         assert all(isinstance(player[1], Hand) for player in game.players)
         assert all(player[2] is None for player in game.players)
 
+    def test_has_phases(self):
+        game = Game([])
+        assert " / ".join(game.phases) == "voice / age1 / age2 / age3 / legacy"
+
     def test_starts_with_voices(self):
         game = Game([])
         assert game.phase == "voice"
@@ -46,3 +50,17 @@ class TestGame:
         game = Game([])
         assert isinstance(game.decks["legacy"], Deck)
         assert game.decks["legacy"].deck_type == "legacy"
+
+    def test_advance_phase(self):
+        game = Game([])
+        assert game.phase == "voice"
+        game.advance_phase()
+        assert game.phase == "age1"
+        game.advance_phase()
+        assert game.phase == "age2"
+        game.advance_phase()
+        assert game.phase == "age3"
+        game.advance_phase()
+        assert game.phase == "legacy"
+        game.advance_phase()
+        assert game.phase == "legacy"

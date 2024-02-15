@@ -16,6 +16,7 @@ class TestGame:
         assert len(game.players) == 3
         assert all(isinstance(player[0], MagicMock) for player in game.players)
         assert all(isinstance(player[1], Hand) for player in game.players)
+        assert all(player[2] is None for player in game.players)
 
     def test_starts_with_voices(self):
         game = Game([])

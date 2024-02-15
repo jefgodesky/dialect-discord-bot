@@ -16,6 +16,7 @@ class Game:
         self.decks = {}
         for deck in self.phases:
             self.decks[deck] = Deck(deck)
+            self.decks[deck].shuffle()
 
         hands = [Hand(card_list=self.card_list) for _ in players]
         played: List[Optional[Card]] = [None for _ in players]

@@ -1,5 +1,5 @@
 from collections import Counter
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 import pytest
 
@@ -61,6 +61,13 @@ class TestGame:
         game = Game([])
         assert isinstance(game.decks["legacy"], Deck)
         assert game.decks["legacy"].deck_type == "legacy"
+
+    def test_shuffles_decks(self):
+        with patch("random.shuffle") as mock_shuffle:
+            game = Game([])
+            decks = ["voice", "age1", "age2", "age3", "legacy"]
+            for deck in decks:
+                mock_shuffle.assert_any_call(game.decks[deck].cards)
 
     def test_next_phase(self):
         game = Game([])

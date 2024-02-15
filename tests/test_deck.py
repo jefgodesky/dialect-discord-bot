@@ -1,4 +1,4 @@
-from unittest.mock import patch
+from unittest.mock import patch, mock_open
 
 from card.classes import Card
 from hand.classes import Hand
@@ -9,6 +9,13 @@ class TestDeck:
     def test_creates_deck(self):
         deck = Deck()
         assert isinstance(deck, Deck)
+
+    @patch("deck.classes.open", new_callable=mock_open, read_data="data")
+    def test_pass_labels(self, open_mock):
+        labels = DeckLabels()
+        assert open_mock.call_count == 1
+        Deck(labels=labels)
+        assert open_mock.call_count == 1
 
     def test_creates_voice_deck(self):
         deck = Deck("voice")

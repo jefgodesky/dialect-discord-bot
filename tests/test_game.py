@@ -3,7 +3,6 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from card.classes import Card
 from deck.classes import Deck
 from hand.classes import Hand
 from game.classes import Game
@@ -109,7 +108,7 @@ class TestGame:
     def test_play_advances_phase(self, play_game):
         for player in play_game.players:
             assert play_game.phase == "voice"
-            play_game.play(player[0], Card())
+            play_game.play(player[0], player[1].cards[0])
         assert play_game.phase == "age1"
 
     def test_advancing_to_age1_deals_cards(self, play_game):

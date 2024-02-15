@@ -1,5 +1,6 @@
 from unittest.mock import patch
 
+from card.classes import Card
 from deck.classes import Deck
 
 
@@ -78,3 +79,15 @@ class TestDeck:
         with patch("random.shuffle") as mock_shuffle:
             deck.shuffle()
             mock_shuffle.assert_called_once_with(deck.cards)
+
+    def test_draw_returns_card(self):
+        deck = Deck("legacy")
+        card = deck.draw()
+        assert isinstance(card, Card)
+
+    def test_draw_removes_card(self):
+        deck = Deck("legacy")
+        card = deck.draw()
+        assert len(deck.cards) == 5
+        for c in deck.cards:
+            assert card.index != c.index

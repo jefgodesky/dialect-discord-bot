@@ -1,0 +1,87 @@
+voice:
+  - Explorer
+  - Ruler
+  - Jester
+  - Celebrity
+  - Innocent
+  - Sage
+  - Magician
+  - Scrounger
+  - Zealot
+  - Healer
+  - Protector
+  - Artist
+  - Mediator
+  - Oracle
+  - Leader
+age1:
+  - Greeting
+  - Bad Omen
+  - Friend
+  - Happiness
+  - Wonderful
+  - Term of Endearment
+  - Unit of Time
+  - Filler Word
+  - Worry
+  - Special Occasion
+  - The Future
+  - Expletive
+  - Money
+  - Technology
+  - The Past
+  - Honorific
+  - Work
+  - Resource
+  - Good Luck
+  - Sadness
+  - Death
+  - Create a Word
+age2:
+  - Faction
+  - Discovery
+  - Vice
+  - Title of Command
+  - Environmental Feature
+  - New Ritual
+  - What Lies Outside
+  - Traitor
+  - Narrowing
+  - Sobriquet
+  - Eponym
+  - Change in Register
+  - Widening
+  - Portmanteau
+  - Sound Change
+  - Proverb
+  - Evolve (A)
+  - Pronoun
+  - Hyperbole
+  - Euphemism
+  - Create a Word (A)
+  - Evolve (B)
+  - Antonym
+  - Subgroup Synonym
+  - Create a Word (B)
+age3:
+  - Label
+  - Decree
+  - Unity Saying
+  - Promise
+  - Survival
+  - Taboo
+  - Disuse
+  - Symbol of Hope
+  - Fracture
+  - What We Bring In
+  - What We Pass On
+  - A New Source
+  - Misunderstanding
+  - Perceptions
+legacy:
+  - Legacy Options (A)
+  - Legacy Options (B)
+  - Legacy Options (C)
+  - Legacy Options (D)
+  - Legacy Options (E)
+  - Legacy Options (F)

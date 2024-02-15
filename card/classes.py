@@ -1,4 +1,6 @@
-from deck.classes import DeckType
+from typing import Literal
+
+DeckType = Literal["voice", "age1", "age2", "age3", "legacy"]
 
 
 class Card:

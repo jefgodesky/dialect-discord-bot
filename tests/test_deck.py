@@ -45,3 +45,28 @@ class TestDeck:
     def test_age3_has_14_cards(self):
         deck = Deck("age3")
         assert len(deck.cards) == 14
+
+    def test_voice_has_voice_cards(self):
+        deck = Deck("voice")
+        for card in deck.cards:
+            assert card.deck_type == "voice"
+
+    def test_age1_has_age1_cards(self):
+        deck = Deck("age1")
+        for card in deck.cards:
+            assert card.deck_type == "age1"
+
+    def test_age2_has_age2_cards(self):
+        deck = Deck("age2")
+        for card in deck.cards:
+            assert card.deck_type == "age2"
+
+    def test_age3_has_age3_cards(self):
+        deck = Deck("age3")
+        for card in deck.cards:
+            assert card.deck_type == "age3"
+
+    def test_legacy_has_legacy_cards(self):
+        deck = Deck("legacy")
+        for card in deck.cards:
+            assert card.deck_type == "legacy"

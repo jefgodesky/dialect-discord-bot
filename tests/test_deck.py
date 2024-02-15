@@ -1,8 +1,9 @@
 from unittest.mock import patch, mock_open
 
 from card.classes import Card
+from cardlist.classes import CardList
 from hand.classes import Hand
-from deck.classes import Deck, DeckLabels
+from deck.classes import Deck
 
 
 class TestDeck:
@@ -10,11 +11,11 @@ class TestDeck:
         deck = Deck()
         assert isinstance(deck, Deck)
 
-    @patch("deck.classes.open", new_callable=mock_open, read_data="data")
+    @patch("cardlist.classes.open", new_callable=mock_open, read_data="data")
     def test_pass_labels(self, open_mock):
-        labels = DeckLabels()
+        card_list = CardList()
         assert open_mock.call_count == 1
-        Deck(labels=labels)
+        Deck(card_list=card_list)
         assert open_mock.call_count == 1
 
     def test_creates_voice_deck(self):
@@ -116,13 +117,3 @@ class TestDeck:
         assert len(h1.cards) == 3
         assert len(h2.cards) == 3
         assert len(h3.cards) == 3
-
-
-class TestDeckLabels:
-    def test_creates_deck_labels(self):
-        labels = DeckLabels()
-        assert isinstance(labels, DeckLabels)
-
-    def test_loads_labels(self):
-        labels = DeckLabels()
-        assert labels.get("voice", 1) == "Explorer"

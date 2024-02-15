@@ -61,6 +61,15 @@ class TestGame:
         assert isinstance(game.decks["legacy"], Deck)
         assert game.decks["legacy"].deck_type == "legacy"
 
+    def test_next_phase(self):
+        game = Game([])
+        assert game.next_phase() == 1
+
+    def test_next_phase_max(self):
+        game = Game([])
+        game.curr_phase = 20
+        assert game.next_phase() == len(game.phases) - 1
+
     def test_advance_phase(self):
         game = Game([])
         assert game.phase == "voice"

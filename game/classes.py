@@ -44,5 +44,8 @@ class Game:
         index = self.get_player_index(member)
         return None if index is None else self.players[index]
 
+    def next_phase(self):
+        return min(self.curr_phase + 1, len(self.phases) - 1)
+
     def advance_phase(self):
-        self.curr_phase = min(self.curr_phase + 1, len(self.phases) - 1)
+        self.curr_phase = self.next_phase()

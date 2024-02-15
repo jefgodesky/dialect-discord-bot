@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from deck.classes import Deck
 
 
@@ -70,3 +72,9 @@ class TestDeck:
         deck = Deck("legacy")
         for card in deck.cards:
             assert card.deck_type == "legacy"
+
+    def test_shuffle(self):
+        deck = Deck("legacy")
+        with patch("random.shuffle") as mock_shuffle:
+            deck.shuffle()
+            mock_shuffle.assert_called_once_with(deck.cards)

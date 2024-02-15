@@ -1,6 +1,7 @@
+from typing import Literal
 import yaml
 
-from card.classes import DeckType
+DeckType = Literal["voice", "age1", "age2", "age3", "legacy"]
 
 
 class CardList:

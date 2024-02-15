@@ -24,5 +24,14 @@ class Game:
     def phase(self):
         return self.phases[self.curr_phase]
 
+    def play(self, member: Member, card: Card):
+        for i, (player, hand, played_card) in enumerate(self.players):
+            if player == member:
+                self.players[i] = (player, hand, card)
+                break
+
+        if all(player[2] is not None for player in self.players):
+            self.advance_phase()
+
     def advance_phase(self):
         self.curr_phase = min(self.curr_phase + 1, len(self.phases) - 1)

@@ -1,5 +1,8 @@
 from unittest.mock import MagicMock
 
+import pytest
+
+from card.classes import Card
 from deck.classes import Deck
 from hand.classes import Hand
 from game.classes import Game
@@ -64,3 +67,23 @@ class TestGame:
         assert game.phase == "legacy"
         game.advance_phase()
         assert game.phase == "legacy"
+
+    @pytest.fixture
+    def play_game(self):
+        players = [MagicMock() for _ in range(3)]
+        game = Game(players)
+        assert game.players[0][2] is None
+        assert game.players[1][2] is None
+        return game
+
+    def test_play(self, play_game):
+        card = Card("voice", 1)
+        play_game.play(play_game.players[0][0], card)
+        assert play_game.players[0][2] == card
+        assert play_game.players[1][2] is None
+
+    def test_play_advances_phase(self, play_game):
+        for player in play_game.players:
+            assert play_game.phase == "voice"
+            play_game.play(player[0], Card())
+        assert play_game.phase == "age1"

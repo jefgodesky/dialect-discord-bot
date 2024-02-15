@@ -1,3 +1,4 @@
+from collections import Counter
 from unittest.mock import MagicMock
 
 import pytest
@@ -121,3 +122,44 @@ class TestGame:
         for player in play_game.players:
             assert len(player[1].cards) == 3
             assert all(card.deck_type == "age1" for card in player[1].cards)
+
+    @staticmethod
+    def draw(phase: int, game: Game):
+        game.curr_phase = phase
+        game.draw(game.players[0][0])
+        hand = game.players[0][1]
+        count = Counter(card.deck_type for card in hand.cards)
+        return hand, count
+
+    def test_draw_voice(self, play_game):
+        hand, count = self.draw(0, play_game)
+        assert len(hand.cards) == 3
+        assert count["voice"] == 3
+
+    def test_draw_age1(self, play_game):
+        hand, count = self.draw(1, play_game)
+        assert len(hand.cards) == 4
+        assert count["voice"] == 3
+        assert count["age2"] == 1
+
+    def test_draw_age2(self, play_game):
+        hand, count = self.draw(2, play_game)
+        assert len(hand.cards) == 4
+        assert count["voice"] == 3
+        assert count["age3"] == 1
+
+    def test_draw_age3(self, play_game):
+        hand, count = self.draw(3, play_game)
+        assert len(hand.cards) == 4
+        assert count["voice"] == 3
+        assert count["legacy"] == 1
+
+    def test_draw_legacy(self, play_game):
+        hand, count = self.draw(4, play_game)
+        assert len(hand.cards) == 3
+        assert count["voice"] == 3
+
+    def test_draw_too_late(self, play_game):
+        hand, count = self.draw(25, play_game)
+        assert len(hand.cards) == 3
+        assert count["voice"] == 3

@@ -24,7 +24,7 @@ class Game:
 
     @property
     def phase(self):
-        return self.phases[self.curr_phase]
+        return self.phases[max(min(self.curr_phase, len(self.phases) - 1), 0)]
 
     def deal(self, deck_type: DeckType):
         for index, _ in enumerate(self.players):
@@ -38,6 +38,16 @@ class Game:
 
         if all(player[2] is not None for player in self.players):
             self.advance_phase()
+
+    def draw(self, member: Member) -> None:
+        draw_phases = ["age1", "age2", "age3"]
+        if self.phase not in draw_phases:
+            return
+
+        index = self.get_player_index(member)
+        if index is not None:
+            next_phase = self.phases[self.next_phase()]
+            self.players[index][1].draw(self.decks[next_phase].draw())
 
     def get_player_index(self, member: Member) -> Optional[int]:
         for i, (player, hand, card) in enumerate(self.players):

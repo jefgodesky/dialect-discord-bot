@@ -21,6 +21,13 @@ class TestGame:
         assert all(isinstance(player[1], Hand) for player in game.players)
         assert all(player[2] is None for player in game.players)
 
+    def test_deals_voices(self):
+        players = [MagicMock() for _ in range(3)]
+        game = Game(players)
+        for player in game.players:
+            assert len(player[1].cards) == 3
+            assert all(card.deck_type == "voice" for card in player[1].cards)
+
     def test_has_phases(self):
         game = Game([])
         assert " / ".join(game.phases) == "voice / age1 / age2 / age3 / legacy"
@@ -87,3 +94,6 @@ class TestGame:
             assert play_game.phase == "voice"
             play_game.play(player[0], Card())
         assert play_game.phase == "age1"
+
+    def test_get_player_index(self, play_game):
+        assert play_game.get_player_index(play_game.players[0][0]) == 0

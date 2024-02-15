@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Tuple
 from discord import Member
 
 from card.classes import Card
@@ -40,6 +40,10 @@ class Game:
             if player == member:
                 return i
         return None
+
+    def get_player(self, member: Member) -> Optional[Tuple]:
+        index = self.get_player_index(member)
+        return None if index is None else self.players[index]
 
     def advance_phase(self):
         self.curr_phase = min(self.curr_phase + 1, len(self.phases) - 1)

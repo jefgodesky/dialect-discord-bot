@@ -97,3 +97,6 @@ class TestGame:
 
     def test_get_player_index(self, play_game):
         assert play_game.get_player_index(play_game.players[0][0]) == 0
+
+    def test_get_player(self, play_game):
+        assert play_game.get_player(play_game.players[0][0]) == play_game.players[0]

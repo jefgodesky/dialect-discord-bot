@@ -2,7 +2,6 @@ from unittest.mock import patch, mock_open
 
 from card.classes import Card
 from cardlist.classes import CardList
-from hand.classes import Hand
 from deck.classes import Deck
 
 
@@ -104,16 +103,3 @@ class TestDeck:
         assert len(deck.cards) == 5
         for c in deck.cards:
             assert card.index != c.index
-
-    def test_deal(self):
-        h1 = Hand()
-        h2 = Hand()
-        h3 = Hand()
-
-        deck = Deck("voice")
-        deck.deal(3, [h1, h2, h3])
-
-        assert len(deck.cards) == 6
-        assert len(h1.cards) == 3
-        assert len(h2.cards) == 3
-        assert len(h3.cards) == 3

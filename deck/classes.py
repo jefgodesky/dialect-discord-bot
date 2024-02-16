@@ -1,9 +1,7 @@
-from typing import List
 import random
 
 from card.classes import Card
 from cardlist.classes import CardList, DeckType
-from hand.classes import Hand
 
 
 class Deck:
@@ -23,8 +21,3 @@ class Deck:
 
     def draw(self) -> Card:
         return self.cards.pop()
-
-    def deal(self, num: int, players: List[Hand]) -> None:
-        for x in range(num):
-            for player in players:
-                player.draw(self.draw())

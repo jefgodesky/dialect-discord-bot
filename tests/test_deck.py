@@ -1,7 +1,10 @@
-from unittest.mock import patch, mock_open
+from unittest.mock import patch, mock_open, MagicMock
+
+from discord import Member
 
 from card.classes import Card
 from cardlist.classes import CardList
+from player.classes import Player
 from deck.classes import Deck
 
 
@@ -103,3 +106,10 @@ class TestDeck:
         assert len(deck.cards) == 5
         for c in deck.cards:
             assert card.index != c.index
+
+    def test_deal(self):
+        players = [Player(MagicMock(spec=Member)) for _ in range(3)]
+        deck = Deck("voice")
+        deck.deal(3, players)
+        assert len(deck.cards) == 6
+        assert all(len(player.cards) == 3 for player in players)

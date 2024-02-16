@@ -62,11 +62,10 @@ class Game:
 
         draw = ["voice", "age1", "age2", "age3"]
         if self.phase in draw:
-            redeal = ["age1", "legacy"]
-            redeal_number = {"age1": 3, "legacy": 1}
-            if self.next_phase[0] in redeal:
+            redeal = {"age1": 3, "legacy": 1}
+            if self.next_phase[0] in list(redeal.keys()):
                 player.discard()
-                num = redeal_number[self.next_phase[0]]
+                num = redeal[self.next_phase[0]]
                 self.decks[self.next_phase[0]].deal(num, [player])
             else:
                 player.deal([self.decks[self.next_phase[0]].draw()])

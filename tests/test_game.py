@@ -111,6 +111,48 @@ class TestGame:
             for player in game.players
         )
 
+    def test_join_game(self, game):
+        acct = MagicMock(spec=Member)
+        assert len(game.players) == 3
+        result = game.join(Player(acct))
+        assert len(game.players) == 4
+        assert game.get_player_index(acct) == 3
+        assert result is True
+
+    def test_join_game_deals_in_player(self, game):
+        game.join(Player(MagicMock(spec=Member)))
+        cards = game.players[3].cards
+        assert len(cards) == 3
+        assert all(card.deck_type == "voice" for card in cards)
+
+    def test_join_game_rejects_age1(self, age1):
+        acct = MagicMock(spec=Member)
+        assert len(age1.players) == 3
+        result = age1.join(Player(acct))
+        assert len(age1.players) == 3
+        assert result is False
+
+    def test_join_game_rejects_age2(self, age2):
+        acct = MagicMock(spec=Member)
+        assert len(age2.players) == 3
+        result = age2.join(Player(acct))
+        assert len(age2.players) == 3
+        assert result is False
+
+    def test_join_game_rejects_age3(self, age3):
+        acct = MagicMock(spec=Member)
+        assert len(age3.players) == 3
+        result = age3.join(Player(acct))
+        assert len(age3.players) == 3
+        assert result is False
+
+    def test_join_game_rejects_legacy(self, legacy):
+        acct = MagicMock(spec=Member)
+        assert len(legacy.players) == 3
+        result = legacy.join(Player(acct))
+        assert len(legacy.players) == 3
+        assert result is False
+
     def test_next_phase(self, game):
         assert game.next_phase == ("age1", 1)
         game.curr_phase = 1

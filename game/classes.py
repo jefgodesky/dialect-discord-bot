@@ -35,6 +35,14 @@ class Game:
         played = [player for player, card in self.plays]
         return list(filter(lambda player: player not in played, self.players))
 
+    def join(self, new_player: Player) -> bool:
+        if self.phase != "voice":
+            return False
+
+        self.players.append(new_player)
+        self.decks["voice"].deal(3, [new_player])
+        return True
+
     def advance_phase(self) -> None:
         _, next_phase = self.next_phase
         self.curr_phase = next_phase

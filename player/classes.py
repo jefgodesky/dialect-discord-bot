@@ -26,7 +26,7 @@ class Player:
         return card
 
     def get_card_index(self, label: str) -> Optional[int]:
-        for index in range(len(self.cards)):
+        for index, card in enumerate(self.cards):
             if self.cards[index].label == label:
                 return index
         return None

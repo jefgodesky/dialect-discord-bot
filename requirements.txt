@@ -21,11 +21,12 @@ pathspec==0.12.1
 platformdirs==4.2.0
 pluggy==1.4.0
 pre-commit==3.6.1
-pytest==8.0.0
+pytest==8.0.1
 pytest-asyncio==0.23.5
 python-dotenv==1.0.1
 PyYAML==6.0.1
-ruff==0.2.1
+ruff==0.2.2
 typing_extensions==4.9.0
 virtualenv==20.25.0
 yarl==1.9.4
+git+https://github.com/jefgodesky/conlang-tools.git@main#egg=conlang_tools

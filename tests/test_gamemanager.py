@@ -23,6 +23,13 @@ class TestGameManager:
         assert len(game.players) == 1
         assert game.players[0].account == requester
 
+    def test_create_game_with_base_language(self):
+        manager = GameManager()
+        requester = MagicMock(spec=Member)
+        manager.create(123456789, 987654321, requester, base_language="english")
+        game = manager.directory[(123456789, 987654321)]
+        assert game.base_language == "english"
+
     def test_create_game_already_in_progress(self):
         manager = GameManager()
         requester = MagicMock(spec=Member)

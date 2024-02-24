@@ -8,12 +8,18 @@ class GameManager:
     def __init__(self):
         self.directory = {}
 
-    def create(self, server: int, channel: int, initiator: Member) -> bool:
+    def create(
+        self,
+        server: int,
+        channel: int,
+        initiator: Member,
+        base_language: Optional[str] = None,
+    ) -> bool:
         key = (server, channel)
         if key in self.directory:
             return False
 
-        self.directory[key] = Game([Player(initiator)])
+        self.directory[key] = Game([Player(initiator)], base_language=base_language)
         return True
 
     def get(self, server: int, channel: int) -> Optional[Game]:

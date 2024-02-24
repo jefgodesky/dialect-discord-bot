@@ -9,11 +9,14 @@ from discord import (
     Object,
     User,
 )
+import glob
 from dotenv import load_dotenv
 import os
 
 from gamemanager.classes import GameManager
 from player.classes import Player
+
+languages = []
 
 load_dotenv()
 intents = Intents.default()
@@ -92,10 +95,21 @@ async def card_autocomplete(
     ]
 
 
+async def language_autocomplete(
+    interaction: Interaction, current: str
+) -> List[app_commands.Choice[str]]:
+    return [
+        app_commands.Choice(name=lang, value=lang)
+        for lang in languages
+        if current.lower() in lang.lower()
+    ]
+
+
 @tree.command(
     name="start", description="Start a new game of Dialect.", guild=Object(id=server)
 )
-async def start(interaction: Interaction) -> None:
+@app_commands.autocomplete(lang=language_autocomplete)
+async def start(interaction: Interaction, lang: str) -> None:
     guild_id, channel_id, user = unpack_interaction(interaction)
     game = games.get(guild_id, channel_id)
     if game is not None:
@@ -110,7 +124,7 @@ async def start(interaction: Interaction) -> None:
         description = descriptions[game.phase]
         response = f"There’s already a game in this channel. {description}"
         await interaction.response.send_message(response)
-    elif games.create(guild_id, channel_id, user):
+    elif games.create(guild_id, channel_id, user, base_language=lang):
         response = (
             "**Let’s play Dialect!** To join, use the **/join** slash command. New players can only join "
             "during the character creation phase."
@@ -268,6 +282,9 @@ async def end(interaction: Interaction) -> None:
 
 @client.event
 async def on_ready():
+    global languages
+    language_files = glob.glob("languages/*.yaml")
+    languages = [os.path.splitext(os.path.basename(file))[0] for file in language_files]
     await tree.sync(guild=Object(id=server))
     print(f"Logged in as {client.user}")
 

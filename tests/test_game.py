@@ -71,6 +71,10 @@ class TestGame:
         game = Game([])
         assert isinstance(game, Game)
 
+    def test_sets_base_language(self):
+        game = Game([], base_language="english")
+        assert game.base_language == "english"
+
     def test_adds_players_to_game(self, game):
         assert len(game.players) == 3
 

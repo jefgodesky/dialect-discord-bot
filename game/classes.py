@@ -9,9 +9,10 @@ from player.classes import Player
 
 
 class Game:
-    def __init__(self, players: List[Player]):
+    def __init__(self, players: List[Player], base_language: Optional[str] = None):
         self.card_list = CardList()
         self.players = players
+        self.base_language = base_language
         self.phases: List[DeckType] = ["voice", "age1", "age2", "age3", "legacy"]
         self.curr_phase = 0
         self.plays: List[Tuple[Player, Card]] = []

@@ -56,7 +56,7 @@ async def no_game(interaction: Interaction) -> None:
         "There isn’t a game in this channel to join — or at least, there isn’t one _yet_. Use the "
         "**/start** slash command to start one."
     )
-    await interaction.response.send_message(response)
+    await interaction.response.send_message(response, ephemeral=True)
 
 
 async def send_hand(member: Member, guild_id: int, channel_id: int) -> None:
@@ -221,6 +221,37 @@ async def status(interaction: Interaction) -> None:
 
 
 @tree.command(
+    name="words", description="Generate new random words.", guild=Object(id=server)
+)
+@app_commands.describe(num_words="The number of new words to generate.")
+@app_commands.describe(num_syllables="The number of syllables these words should have.")
+async def words(interaction: Interaction, num_words: int, num_syllables: int) -> None:
+    guild_id, channel_id, user = unpack_interaction(interaction)
+    game = games.get(guild_id, channel_id)
+    if game is None:
+        await no_game(interaction)
+        return
+
+    if game.base_language is None:
+        await interaction.response.send_message(
+            "Sorry, this game does not have a base language set, so I can’t "
+            "generate new words for you.",
+            ephemeral=True,
+        )
+        return
+
+    words = game.base_language.generate_new_words(
+        num_words, num_syllables=num_syllables
+    )
+    intro_many = f"Here are {num_words} {num_syllables}-syllable words that fit "
+    intro_single = f"Here is a {num_syllables}-syllable word that fits "
+    intro_head = intro_single if num_words == 1 else intro_many
+    intro = f"{intro_head} your base language’s phonotactic and phonological rules."
+    lines = [intro] + words
+    await interaction.response.send_message("\n".join(lines), ephemeral=True)
+
+
+@tree.command(
     name="play", description="Play a card from your hand.", guild=Object(id=server)
 )
 @app_commands.describe(card="The card you want to play.")
@@ -230,13 +261,15 @@ async def play(interaction: Interaction, card: str) -> None:
     game = games.get(guild_id, channel_id)
     if game is None:
         await no_game(interaction)
+        return
 
     accounts = [player.account for player in game.players]
     if user not in accounts:
         can_join = "You have to join the game before you can play. Use the **/join** slash command to join!"
         cannot_join = "Sorry, this game is already underway. It’s too late to join."
         response = can_join if game.phase == "voice" else cannot_join
-        await interaction.response.send_message(response)
+        await interaction.response.send_message(response, ephemeral=True)
+        return
 
     card_instance = game.play(user, card)
     response = f"{user.mention} plays {card}."

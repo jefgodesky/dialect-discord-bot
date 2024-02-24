@@ -1,6 +1,7 @@
 from typing import List, Optional, Tuple
 
 from discord import Member
+from conlang_tools.language.classes import Language
 
 from card.classes import Card
 from cardlist.classes import CardList, DeckType
@@ -12,7 +13,6 @@ class Game:
     def __init__(self, players: List[Player], base_language: Optional[str] = None):
         self.card_list = CardList()
         self.players = players
-        self.base_language = base_language
         self.phases: List[DeckType] = ["voice", "age1", "age2", "age3", "legacy"]
         self.curr_phase = 0
         self.plays: List[Tuple[Player, Card]] = []
@@ -20,6 +20,13 @@ class Game:
         for phase in self.phases:
             self.decks[phase].shuffle()
         self.decks["voice"].deal(3, self.players)
+
+        if base_language:
+            try:
+                self.base_language = Language.load(base_language)
+            except FileNotFoundError:
+                print(f"Could not find languages/{base_language}.yaml")
+                self.base_language = None
 
     @property
     def phase(self):

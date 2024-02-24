@@ -1,5 +1,6 @@
 from unittest.mock import MagicMock
 from discord import Member
+from conlang_tools.language.classes import Language
 from game.classes import Game
 from gamemanager.classes import GameManager
 
@@ -26,9 +27,9 @@ class TestGameManager:
     def test_create_game_with_base_language(self):
         manager = GameManager()
         requester = MagicMock(spec=Member)
-        manager.create(123456789, 987654321, requester, base_language="english")
+        manager.create(123456789, 987654321, requester, base_language="odamic")
         game = manager.directory[(123456789, 987654321)]
-        assert game.base_language == "english"
+        assert isinstance(game.base_language, Language)
 
     def test_create_game_already_in_progress(self):
         manager = GameManager()

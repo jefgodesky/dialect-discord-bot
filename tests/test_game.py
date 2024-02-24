@@ -1,6 +1,7 @@
 from collections import Counter
 from unittest.mock import patch, mock_open, MagicMock
 
+from conlang_tools.language.classes import Language
 from discord import Member
 import pytest
 
@@ -72,8 +73,8 @@ class TestGame:
         assert isinstance(game, Game)
 
     def test_sets_base_language(self):
-        game = Game([], base_language="english")
-        assert game.base_language == "english"
+        game = Game([], base_language="odamic")
+        assert isinstance(game.base_language, Language)
 
     def test_adds_players_to_game(self, game):
         assert len(game.players) == 3

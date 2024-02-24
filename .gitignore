@@ -155,5 +155,9 @@ cython_debug/
 # Hide game IP
 cards
 
+# Ignore language files
+languages
+
 # IDE configuration
 .idea
+.DS_Store
